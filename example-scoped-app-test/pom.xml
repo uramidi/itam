@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.snc.glide.test</groupId>
+		<artifactId>snc-it-parent</artifactId>
+		<version>8.0.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>example-scoped-app-test</artifactId>
+	<name>Example Scoped App Tests</name>
+	<properties>
+		<!-- dependency management -->
+		<snc.thirdparty.import.pom.version>1.0.53</snc.thirdparty.import.pom.version>
+		<glide.version>8.0.0.0-SNAPSHOT</glide.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.snc</groupId>
+				<artifactId>glide</artifactId>
+				<version>${glide.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${project.artifactId}</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- Import third party dependency version control -->
+			<dependency>
+				<groupId>com.snc</groupId>
+				<artifactId>snc-thirdparty-import-pom</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>${snc.thirdparty.import.pom.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.snc</groupId>
+			<artifactId>glide</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.snc.test</groupId>
+			<artifactId>commons-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.snc.test</groupId>
+			<artifactId>commons-test-glide</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.snc.glide.test</groupId>
+			<artifactId>glide-selenium</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.snc.glide.test</groupId>
+			<artifactId>glide-test-tools</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>it</id>
+			<dependencies>
+				<dependency>
+					<groupId>com.snc</groupId>
+					<artifactId>glide-dist</artifactId>
+					<classifier>dist</classifier>
+					<type>zip</type>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>com.snc.glide.test</groupId>
+					<artifactId>glide-db-dump</artifactId>
+					<classifier>zboot</classifier>
+					<type>zsql</type>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+</project>
