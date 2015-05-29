@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.snc</groupId>
+		<artifactId>snc-parent</artifactId>
+		<version>1.58</version>
+	</parent>
+
+	<artifactId>example-scoped-app</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Example Scoped App</name>
+	<packaging>pom</packaging>
+
+	<!-- Maven release plugin needs to know where to find the source code repository -->
+	<scm>
+		<connection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</connection>
+		<developerConnection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</developerConnection>
+		<tag>master</tag>
+		<url>https://source.devsnc.com/view/example-scoped-app.git</url>
+	</scm>
+
+	<properties>
+		<plugin.dir>com.sn_exampleapp</plugin.dir>
+		<jenkins.email.recipients></jenkins.email.recipients>		
+	</properties>
+
+	<!-- Since the parent project is version managed, -->
+	<!-- this POM needs to read directly from the Maven repositories. -->
+	<profiles>
+		<profile>
+			<id>snc-default-repo</id>
+			<activation>
+				<file>
+					<missing>/.m2/use_release.devsnc.com</missing>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>http://nexus.proxy.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>snc-release</id>
+			<activation>
+				<file>
+					<exists>/.m2/use_release.devsnc.com</exists>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>https://release.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+	<build>		
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>						
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/plugins</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.1</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>                   
+					</execution>
+				</executions>
+				<configuration>
+					<filesToInclude>target/**/plugin.xml, target/*/scope/sys_app*.xml</filesToInclude>
+					<token>project.version</token>
+					<value>${project.version}</value>					
+           		</configuration>
+       		</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>app</id>
+						<configuration>
+							<descriptor>src/assembly/app.xml</descriptor>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>
+	</build>
+</project>

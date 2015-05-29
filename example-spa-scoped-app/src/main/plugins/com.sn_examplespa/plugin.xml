@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plugin
+	id="com.sn_examplespa"
+	name="Example Single-page Application (SPA) Scoped App"
+	version="${project.version}"
+	provider_name="ServiceNow">
+	
+	<description>Example Single-page Application (SPA) scoped app. This introduces a client-side build process using gulp.</description>	
+</plugin>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.snc</groupId>
+		<artifactId>snc-parent</artifactId>
+		<version>1.58</version>
+	</parent>
+
+	<artifactId>example-spa-scoped-app</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>Example Single-page Application Scoped App</name>
+	<packaging>pom</packaging>
+
+	<!-- Maven release plugin needs to know where to find the source code repository -->
+	<scm>
+		<connection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</connection>
+		<developerConnection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</developerConnection>
+		<tag>master</tag>
+		<url>https://source.devsnc.com/view/example-scoped-app.git</url>
+	</scm>
+
+	<properties>
+		<plugin.dir>com.sn_examplespa</plugin.dir>
+		<jenkins.email.recipients></jenkins.email.recipients>		
+	</properties>
+
+	<!-- Since the parent project is version managed, -->
+	<!-- this POM needs to read directly from the Maven repositories. -->
+	<profiles>
+		<profile>
+			<id>snc-default-repo</id>
+			<activation>
+				<file>
+					<missing>/.m2/use_release.devsnc.com</missing>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>http://nexus.proxy.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>snc-release</id>
+			<activation>
+				<file>
+					<exists>/.m2/use_release.devsnc.com</exists>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>https://release.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>start-gulp-watch</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>0.0.20</version>
+						<executions>
+							<execution>
+								<id>gulp watch</id>
+								<goals>
+									<goal>gulp</goal>
+								</goals>
+								<phase>initialize</phase>
+								<configuration>
+									<arguments>watch</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<!-- NB! Set <version> to the latest released version of frontend-maven-plugin, 
+					like in README.md -->
+				<version>0.0.20</version>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v0.10.30</nodeVersion>
+							<npmVersion>1.4.21</npmVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>gulp build</id>
+						<goals>
+							<goal>gulp</goal>
+						</goals>
+						<configuration>
+							<arguments>build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>app</id>
+						<configuration>
+							<descriptor>src/assembly/app.xml</descriptor>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>
+	</build>
+</project>
