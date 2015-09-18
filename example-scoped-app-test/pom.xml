@@ -15,6 +15,51 @@
 		<glide.version>8.0.0.0-SNAPSHOT</glide.version>
 	</properties>
 
+	<!-- Since the parent project is version managed, -->
+	<!-- this POM needs to read directly from the Maven repositories. -->
+	<profiles>
+		<profile>
+			<id>snc-default-repo</id>
+			<activation>
+				<file>
+					<missing>/.m2/use_release.devsnc.com</missing>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>http://nexus.proxy.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>snc-release</id>
+			<activation>
+				<file>
+					<exists>/.m2/use_release.devsnc.com</exists>
+				</file>
+			</activation>
+			<repositories>
+				<repository>
+					<id>stable</id>
+					<url>https://release.devsnc.com/content/groups/stable</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<!-- This is providing non-UI testing tools -->
