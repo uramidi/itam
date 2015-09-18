@@ -14,6 +14,6 @@
     <sys_updated_on>2014-10-28 05:06:17</sys_updated_on>
     <vendor>ServiceNow</vendor>
 	<vendor_prefix>sn</vendor_prefix>
-	<version>project.version</version>
+	<version>${project.version}</version>
   </sys_app>
 </record_update>

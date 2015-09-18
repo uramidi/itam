@@ -72,14 +72,14 @@
 		</profile>
 	</profiles>
 
-	<build>		
+	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<id>copy-resources</id>						
+						<id>copy-resources</id>
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -89,31 +89,25 @@
 							<resources>
 								<resource>
 									<directory>src/main/plugins</directory>
+									<excludes>
+										<exclude>**/plugin.xml</exclude>
+										<exclude>*/scope/sys_app*</exclude>
+									</excludes>
 									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>src/main/plugins</directory>
+									<includes>
+										<include>**/plugin.xml</include>
+										<inlcude>*/scope/sys_app*</inlcude>
+									</includes>
+									<filtering>true</filtering>
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>replacer</artifactId>
-				<version>1.5.1</version>
-				<executions>
-					<execution>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>replace</goal>
-						</goals>                   
-					</execution>
-				</executions>
-				<configuration>
-					<filesToInclude>target/**/plugin.xml, target/*/scope/sys_app*.xml</filesToInclude>
-					<token>project.version</token>
-					<value>${project.version}</value>					
-           		</configuration>
-       		</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
