@@ -4,6 +4,6 @@
 	name="Example Scoped App"
 	version="${project.version}"
 	provider_name="ServiceNow">
-	
-	<description>Example scoped app.</description>	
+
+	<description>Example scoped app.</description>
 </plugin>

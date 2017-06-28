@@ -6,35 +6,31 @@
 	<parent>
 		<groupId>com.snc</groupId>
 		<artifactId>snc-parent</artifactId>
-		<version>1.58</version>
+		<version>2.6.0.10</version>
 	</parent>
 
 	<artifactId>example-spa-scoped-app</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>Example Single-page Application Scoped App</name>
 	<packaging>pom</packaging>
 
 	<!-- Maven release plugin needs to know where to find the source code repository -->
 	<scm>
-		<connection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</connection>
-		<developerConnection>scm:git:ssh://source.devsnc.com/example-scoped-app.git</developerConnection>
+		<connection>scm:git:https://source.devsnc.com/example-scoped-app.git</connection>
+		<developerConnection>scm:git:https://source.devsnc.com/example-scoped-app.git</developerConnection>
 		<tag>master</tag>
 		<url>https://source.devsnc.com/view/example-scoped-app.git</url>
 	</scm>
 
 	<properties>
 		<plugin.dir>com.sn_examplespa</plugin.dir>
-		<jenkins.email.recipients></jenkins.email.recipients>		
 	</properties>
 
-	<!-- Since the parent project is version managed, -->
-	<!-- this POM needs to read directly from the Maven repositories. -->
 	<profiles>
 		<profile>
 			<id>snc-default-repo</id>
 			<activation>
 				<file>
-					<missing>/.m2/use_release.devsnc.com</missing>
+					<missing>/.m2/use_artifact.devsnc.com</missing>
 				</file>
 			</activation>
 			<repositories>
@@ -54,13 +50,13 @@
 			<id>snc-release</id>
 			<activation>
 				<file>
-					<exists>/.m2/use_release.devsnc.com</exists>
+					<exists>/.m2/use_artifact.devsnc.com</exists>
 				</file>
 			</activation>
 			<repositories>
 				<repository>
 					<id>stable</id>
-					<url>https://release.devsnc.com/content/groups/stable</url>
+					<url>https://artifact.devsnc.com/content/groups/stable</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -77,7 +73,6 @@
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
-						<version>0.0.20</version>
 						<executions>
 							<execution>
 								<id>gulp watch</id>
@@ -100,19 +95,12 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<!-- NB! Set <version> to the latest released version of frontend-maven-plugin, 
-					like in README.md -->
-				<version>0.0.20</version>
 				<executions>
 					<execution>
 						<id>install node and npm</id>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
-						<configuration>
-							<nodeVersion>v0.10.30</nodeVersion>
-							<npmVersion>1.4.21</npmVersion>
-						</configuration>
 					</execution>
 					<execution>
 						<id>npm install</id>
@@ -130,7 +118,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
@@ -145,7 +133,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 		</plugins>
 	</build>
 </project>
