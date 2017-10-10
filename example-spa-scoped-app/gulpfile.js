@@ -50,15 +50,15 @@ gulp.task('resources', function() {
 	return gulp.src([
 		paths.src.base + '/**/*'
 	])
-		.pipe(replace('${project.version}', projectVersion, { 
-			skipBinary: true 
+		.pipe(replace('${project.version}', projectVersion, {
+			skipBinary: true
 		}))
 		.pipe(gulp.dest(paths.target.base))
 });
 
 gulp.task('watch-resources', ['resources'], function() {
 	return gulp.watch([
-			paths.src.base + '/**/*'			
+			paths.src.base + '/**/*'
 		],
 		['resources']);
 });
@@ -70,7 +70,7 @@ function parseProjectVersion() {
 	parser.parseString(pom, function(err, result) {
 		var candidateVersion = (result.project.version ? result.project.version : result.project.parent[0].version)[0];
 		var snapshotTimestamp = moment().utc().format('YYYYMMDDHHmmss');
-		projectVersion = candidateVersion.replace('-SNAPSHOT', '.' + snapshotTimestamp);
+		projectVersion = candidateVersion.replace('-SNAPSHOT', '');
 	});
 	return projectVersion;
 }
