@@ -5,120 +5,34 @@
 
 	<parent>
 		<groupId>com.snc</groupId>
-		<artifactId>snc-parent</artifactId>
-		<version>2.6.0.10</version>
+		<artifactId>snc-app-parent</artifactId>
+		<version>2.7.0.11</version>
 	</parent>
 
 	<artifactId>example-scoped-app</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<!-- Maven release plugin needs to know where to find the source code repository -->
 	<scm>
-		<connection>scm:git:https://source.devsnc.com/example-scoped-app.git</connection>
-		<developerConnection>scm:git:https://source.devsnc.com/example-scoped-app.git</developerConnection>
+		<developerConnection>scm:git:${snc.git.baseurl}/example-scoped-app.git</developerConnection>
 		<tag>master</tag>
-		<url>https://source.devsnc.com/view/example-scoped-app.git</url>
 	</scm>
 
 	<properties>
 		<plugin.dir>com.sn_exampleapp</plugin.dir>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>snc-default-repo</id>
-			<activation>
-				<file>
-					<missing>/.m2/use_artifact.devsnc.com</missing>
-				</file>
-			</activation>
-			<repositories>
-				<repository>
-					<id>stable</id>
-					<url>http://nexus.proxy.devsnc.com/content/groups/stable</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-		</profile>
-		<profile>
-			<id>snc-release-repo</id>
-			<activation>
-				<file>
-					<exists>/.m2/use_artifact.devsnc.com</exists>
-				</file>
-			</activation>
-			<repositories>
-				<repository>
-					<id>stable</id>
-					<url>https://artifact.devsnc.com/content/groups/stable</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
+	<repositories>
+		<repository>
+			<id>stable</id>
+			<url>http://nexus.proxy.devsnc.com/content/groups/stable</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/plugins</directory>
-									<excludes>
-										<exclude>**/plugin.xml</exclude>
-										<exclude>*/scope/sys_app*</exclude>
-									</excludes>
-									<filtering>false</filtering>
-								</resource>
-								<resource>
-									<directory>src/main/plugins</directory>
-									<includes>
-										<include>**/plugin.xml</include>
-										<inlcude>*/scope/sys_app*</inlcude>
-									</includes>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>app</id>
-						<configuration>
-							<descriptor>src/assembly/app.xml</descriptor>
-						</configuration>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
