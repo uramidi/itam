@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.snc</groupId>
 		<artifactId>snc-app-parent</artifactId>
-		<version>2.7.0.32</version>
+		<version>2.7.0.40</version>
 	</parent>
 
 	<artifactId>example-spa-scoped-app</artifactId>

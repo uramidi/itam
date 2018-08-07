@@ -17,6 +17,7 @@
     "moment": "^2.9.0"
   },
   "scripts": {
+    "ci": "npm ci && npm test",
     "test": "builder run npm:test",
     "watch": "gulp watch"
   }
