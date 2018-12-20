@@ -9,7 +9,7 @@
 		<version>2.8.0.5</version>
 	</parent>
 
-	<artifactId>example-spa-scoped-app</artifactId>
+	<artifactId>g2c-scoped-app</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -19,7 +19,7 @@
 	</scm>
 
 	<properties>
-		<plugin.dir>com.sn_examplespa</plugin.dir>
+		<plugin.dir>com.sn_g2capp</plugin.dir>
 	</properties>
 
 	<repositories>

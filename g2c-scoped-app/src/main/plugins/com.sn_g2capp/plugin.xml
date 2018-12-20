@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plugin
+	id="com.sn_g2capp"
+	name="G2c Scoped App"
+	version="${project.version}"
+	provider_name="ServiceNow"
+	scope_sys_id="2bf7e7a0dbaa6340daa3c6fc3496191d"
+	type="application"
+	state="published">
+	<description>G2C scoped app.</description>
+</plugin>

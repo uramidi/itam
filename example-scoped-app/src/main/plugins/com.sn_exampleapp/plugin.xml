@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<plugin
-	id="com.sn_exampleapp"
-	name="Example Scoped App"
-	version="${project.version}"
-	provider_name="ServiceNow">
-
-	<description>Example scoped app.</description>
-</plugin>
